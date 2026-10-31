@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Shoppers Purchase Intention Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-icon">🛒</div><div><div class="brand-name">Online Shoppers</div><div class="brand-sub">Purchase Intention Analysis</div></div></div>
+  <nav>
+    <button class="nav-item active" data-page="overview">⌂ <span>Project Overview</span></button>
+    <button class="nav-item" data-page="data">▤ <span>Data & Methodology</span></button>
+    <button class="nav-item" data-page="eda">◈ <span>Exploratory Analysis</span></button>
+    <button class="nav-item" data-page="models">◫ <span>Model Evaluation</span></button>
+    <button class="nav-item" data-page="findings">✓ <span>Findings</span></button>
+  </nav>
+  <div class="sidebar-bottom"><div class="mini-card"><div class="mini-label">PROJECT</div><strong>Online Shoppers</strong><span>Purchase Intention</span></div><div class="status"><span></span> Analysis complete</div></div>
+</aside>
+
+<main class="main">
+<section id="overview" class="page active">
+  <div class="hero">
+    <div><div class="eyebrow">INT234 · DATA ANALYSIS</div><h1>Online Shoppers<br><span>Purchase Intention Analysis</span></h1><p>A presentation of the dataset, exploratory analysis, feature engineering, model evaluation, and findings developed in the Python/Streamlit analysis.</p><button class="primary-btn" onclick="showPage('eda')">Explore the Analysis →</button></div>
+    <div class="hero-art"><div class="orb"></div><div class="floating-card card-one">📊<b>EDA</b><small>Shopping patterns</small></div><div class="floating-card card-two">📈<b>Models</b><small>Evaluation results</small></div></div>
+  </div>
+  <div class="section-head"><div><div class="eyebrow">AT A GLANCE</div><h2>Project Overview</h2></div><span class="pill">Online Shoppers Purchasing Intention Dataset</span></div>
+  <div class="kpi-grid"><div class="kpi"><span>DATASET SIZE</span><strong id="kpiSessions">12,330</strong><small>online sessions</small></div><div class="kpi"><span>ORIGINAL FEATURES</span><strong id="kpiFeatures">18</strong><small>dataset attributes</small></div><div class="kpi"><span>PURCHASE RATE</span><strong id="kpiRate">15.5%</strong><small>sessions generating revenue</small></div><div class="kpi"><span>DUPLICATES</span><strong id="kpiDuplicates">125</strong><small>removed before modeling</small></div></div>
+  <div class="overview-chart-grid"><div class="chart-card"><div class="chart-title"><div><h3>Purchase Distribution</h3><span>Revenue target</span></div></div><div class="donut-wrap"><canvas id="purchaseChart"></canvas></div></div><div class="chart-card"><div class="chart-title"><div><h3>Visitor Type</h3><span>Session mix</span></div></div><div class="donut-wrap"><canvas id="visitorChart"></canvas></div></div></div>
+  <div class="info-grid"><div class="info-card"><div class="icon">🎯</div><h3>Objective</h3><p>Understand which browsing and visitor characteristics are associated with sessions that generate revenue.</p></div><div class="info-card"><div class="icon">🔎</div><h3>Analysis</h3><p>Use EDA, engineered features, cross-validation and four classification models to study purchase intention.</p></div><div class="info-card"><div class="icon">📌</div><h3>Focus</h3><p>Emphasis is on presenting the calculated results and graphs from the Python/Streamlit workflow rather than a separate AI product.</p></div></div>
+</section>
+
+<section id="data" class="page">
+  <div class="page-hero"><div class="eyebrow">DATA & METHODOLOGY</div><h1>What was <span>calculated.</span></h1><p>The same preparation and modeling steps used in the original Python analysis, documented as part of the project.</p></div>
+  <div class="method-grid">
+    <div class="method-card"><div class="method-num">01</div><h3>Data cleaning</h3><p>Duplicate rows were identified and removed. <b>12,205</b> unique sessions remained from the original 12,330.</p></div>
+    <div class="method-card"><div class="method-num">02</div><h3>Type conversion</h3><p><code>Weekend</code> and <code>Revenue</code> were converted to integer values for modeling.</p></div>
+    <div class="method-card"><div class="method-num">03</div><h3>Feature engineering</h3><p>Added <code>Total_Pages</code>, <code>Total_Duration</code>, and <code>Avg_Time_Per_Page</code>.</p></div>
+    <div class="method-card"><div class="method-num">04</div><h3>Categorical encoding</h3><p><code>Month</code> and <code>VisitorType</code> were one-hot encoded with the first category dropped.</p></div>
+    <div class="method-card"><div class="method-num">05</div><h3>Train/test split</h3><p>80% training and 20% testing with <code>random_state=42</code> and stratification by Revenue.</p></div>
+    <div class="method-card"><div class="method-num">06</div><h3>Scaling</h3><p>StandardScaler was fitted on the training data and then applied to the test data.</p></div>
+  </div>
+  <div class="chart-card"><div class="chart-title"><div><h3>Dataset Preview</h3><span>First 10 rows of the raw CSV</span></div></div><div class="table-scroll"><table id="previewTable"></table></div></div>
+  <div class="section-head compact"><div><div class="eyebrow">FEATURE ENGINEERING</div><h2>Derived variables</h2></div></div>
+  <div class="formula-grid"><div class="formula-card"><h3>Total_Pages</h3><div>Administrative + Informational + ProductRelated</div></div><div class="formula-card"><h3>Total_Duration</h3><div>Administrative_Duration + Informational_Duration + ProductRelated_Duration</div></div><div class="formula-card"><h3>Avg_Time_Per_Page</h3><div>Total_Duration ÷ Total_Pages, with zero-page sessions assigned 0</div></div></div>
+  <div class="workflow-card"><h3>Modeling workflow</h3><div class="workflow"><span>Clean</span><b>→</b><span>Engineer features</span><b>→</b><span>Encode</span><b>→</b><span>Scale</span><b>→</b><span>Tune</span><b>→</b><span>Train</span><b>→</b><span>Evaluate</span></div></div>
+</section>
+
+<section id="eda" class="page">
+  <div class="page-hero"><div class="eyebrow">EXPLORATORY DATA ANALYSIS</div><h1>Explore the <span>shopping patterns.</span></h1><p>All major EDA plots from the Python/Streamlit version are presented below.</p></div>
+  <div class="chart-grid">
+    <div class="chart-card"><div class="chart-title"><div><h3>Purchase vs No Purchase</h3><span>Target distribution</span></div></div><div class="donut-wrap"><canvas id="edaTargetChart"></canvas></div><div class="chart-note" id="targetNote"></div></div>
+    <div class="chart-card"><div class="chart-title"><div><h3>Visitor Type</h3><span>Session mix</span></div></div><div class="donut-wrap"><canvas id="edaVisitorChart"></canvas></div></div>
+    <div class="chart-card wide"><div class="chart-title"><div><h3>Monthly Sessions</h3><span>Session volume by month</span></div></div><canvas id="monthSessionsChart"></canvas></div>
+    <div class="chart-card wide"><div class="chart-title"><div><h3>Purchase Rate by Month</h3><span>Percentage of sessions resulting in purchase</span></div></div><canvas id="monthRateChart"></canvas></div>
+    <div class="chart-card"><div class="chart-title"><div><h3>Purchase Rate by Visitor Type</h3><span>Category comparison</span></div></div><canvas id="visitorRateChart"></canvas></div>
+    <div class="chart-card"><div class="chart-title"><div><h3>Purchase Rate by Weekend</h3><span>Weekend vs weekday</span></div></div><canvas id="weekendRateChart"></canvas></div>
+    <div class="chart-card wide"><div class="chart-title"><div><h3>Purchase Rate by Traffic Type</h3><span>Traffic source categories</span></div></div><canvas id="trafficRateChart"></canvas></div>
+    <div class="chart-card wide"><div class="chart-title"><div><h3>Purchase Rate by Region</h3><span>Regional comparison</span></div></div><canvas id="regionRateChart"></canvas></div>
+  </div>
+  <div class="feature-chart-card chart-card"><div class="chart-title"><div><h3>Numeric Feature by Revenue</h3><span>Boxplot view · outliers hidden as in the original Python chart</span></div><select id="boxFeature"><option>PageValues</option><option>ExitRates</option><option>BounceRates</option><option>ProductRelated</option><option>ProductRelated_Duration</option><option>Administrative</option><option>Informational</option></select></div><div class="boxplot-area"><canvas id="boxplotChart"></canvas></div></div>
+  <div class="chart-card"><div class="chart-title"><div><h3>Correlation Heatmap</h3><span>Numeric features and Revenue</span></div></div><div id="heatmap" class="heatmap"></div><div class="data-note inline"><strong>Observed:</strong><span>PageValues has the strongest positive correlation with Revenue at 0.49; ExitRates has the strongest negative correlation at -0.21.</span></div></div>
+</section>
+
+<section id="models" class="page">
+  <div class="page-hero"><div class="eyebrow">MODEL EVALUATION</div><h1>Compare the <span>results.</span></h1><p>Evaluation of Logistic Regression, KNN, SVM and Decision Tree using the same test set.</p></div>
+  <div class="model-summary" id="modelSummary"></div>
+  <div class="model-table-wrap"><table><thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th></tr></thead><tbody id="modelTable"></tbody></table></div>
+  <div class="chart-card"><div class="chart-title"><div><h3>Model Metrics</h3><span>Higher is better</span></div></div><canvas id="metricsChart"></canvas></div>
+  <div class="two-col"><div class="chart-card"><div class="chart-title"><div><h3>Confusion Matrix</h3><span>Actual vs predicted outcome</span></div><select id="matrixModel"></select></div><div id="confusionMatrix"></div></div><div class="chart-card"><div class="chart-title"><div><h3>ROC Curves</h3><span>Receiver operating characteristic</span></div></div><canvas id="rocChart"></canvas></div></div>
+  <div class="two-col"><div class="chart-card"><div class="chart-title"><div><h3>KNN Tuning</h3><span>5-fold cross-validation F1-score</span></div></div><canvas id="knnChart"></canvas><div class="data-note" id="knnNote"></div></div><div class="chart-card"><div class="chart-title"><div><h3>Decision Tree Tuning</h3><span>5-fold cross-validation F1-score</span></div></div><canvas id="dtChart"></canvas><div class="data-note" id="dtNote"></div></div></div>
+  <div class="chart-card"><div class="chart-title"><div><h3>Decision Tree · Feature Importance</h3><span>Top 10 features from the selected tree</span></div></div><canvas id="importanceChart"></canvas></div>
+</section>
+
+<section id="findings" class="page">
+  <div class="page-hero"><div class="eyebrow">PROJECT FINDINGS</div><h1>What the analysis <span>shows.</span></h1><p>A concise summary of the calculated results. These are observations from this dataset and model run, not a separate prediction service.</p></div>
+  <div class="finding-grid" id="findingGrid"></div>
+  <div class="chart-card"><div class="chart-title"><div><h3>Model selection summary</h3><span>Why F1-score is useful for the imbalanced target</span></div></div><div class="summary-text" id="modelFindingText"></div></div>
+  <div class="chart-card"><div class="chart-title"><div><h3>Key EDA observations</h3><span>Highest and lowest calculated category rates</span></div></div><div class="observation-list" id="observationList"></div></div>
+</section>
+</main></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.4.0/build/index.umd.min.js"></script>
+<script src="data.js"></script><script src="app.js"></script>
+</body></html>
