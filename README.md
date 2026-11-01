@@ -1,5 +1,7 @@
 # Online Shoppers Purchase Intention Prediction
 
+VIEW THE ANALYSIS DASHBOARD - https://online-shoppers-purchase-intention.vercel.app/
+
 A machine learning project that predicts whether an online shopping session is likely to result in a purchase. The project applies exploratory data analysis, data preprocessing, feature engineering, hyperparameter tuning, and multiple classification algorithms to analyse online shopper behaviour.
 
 ## Project Overview
